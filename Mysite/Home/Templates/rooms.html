@@ -1,0 +1,69 @@
+{% extends 'Base.html' %}
+{% comment %} {% block title %}Home{% endblock %} {% endcomment %}
+{%load static %}
+{% block rooms-content %}
+ {% if user.is_authenticated %} 
+
+  <div class="container">
+    <div class="alert alert-info d-flex justify-content-between" role="alert">
+        <h5>Available Public Rooms</h5>
+        <a href="/accounts/logout/">
+          <button type="button" class="btn btn-light">Click to Log Out</button>
+        </a>
+      </div>
+      
+      
+      {% if rooms %}
+        <div class="row equal">
+            {% for room in rooms %}
+              {% if user.username == room.name %}
+                <div class="col-sm-4 d-flex pb-3">
+                    <div class="card bg-light mb-3" style="max-width: 18rem;">
+                        <div class="card-block">
+                            <h3 class="card-title">{{room.name}}</h3>
+                            <p class="card-text">It is Public group for this Project.</p>
+                            <a href="/{{room.slug}}" class="btn btn-outline-secondary">Go to Room</a>
+                        </div>
+                    </div>
+                </div>
+              {% elif user.username == "admin" %}
+                <div class="col-sm-4 d-flex pb-3">
+                  <div class="card bg-light mb-3" style="max-width: 18rem;">
+                      <div class="card-block">
+                          <h3 class="card-title">{{room.name}}</h3>
+                          <p class="card-text">It is Public group for this Project.</p>
+                          <a href="/{{room.slug}}" class="btn btn-outline-secondary">Go to Room</a>
+                      </div>
+                  </div>
+                </div>
+              {% endif %}
+            {% endfor %}
+
+            
+        </div>
+    {% else %}
+            No Rooms Available!
+    {% endif %}
+  </div>
+
+
+
+ {% else %}
+<div class="container">
+    <div class="alert alert-info d-flex justify-content-between" role="alert">
+        <h5>You are not logged in</h5>
+        <a href="/accounts/logout/">
+          <button type="button" class="btn btn-light"><a href="{% url 'Login' %}">Log In</a></button>
+        </a>
+      </div>
+</div>  
+{% endif %}
+
+<br/>
+
+    
+
+
+
+
+{% endblock %}

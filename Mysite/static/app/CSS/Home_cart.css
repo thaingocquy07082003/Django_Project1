@@ -1,0 +1,193 @@
+@import url(https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&amp;display=swap);
+@import url(https://use.fontawesome.com/releases/v6.4.2/css/all.css);
+:root{
+    --black:#333333;
+    --black-2:#161616;
+    --gray: #707070;
+    --white: #ffffff;
+}
+.product_container {
+    display: flex;
+    /* width: 100%; */
+    flex-wrap: wrap;
+    /* padding-inline-start: 10px; */
+    border: none;
+    gap: 20px;
+}
+
+.product_item {
+    position: relative; 
+    flex-grow: 3;
+    flex: 1 1 calc(25% - 20px);
+    flex-basis: 200;
+    background-color: aqua;
+    max-width: 24em;
+    width: 25%;
+    border-radius: 25px;
+    padding: 1.4em;
+    background: #fff;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+    z-index: 3;
+    overflow: hidden;
+    font-family: "Poppins", sans-serif;
+}
+.clear {
+    clear: both;
+}
+
+.Logocart{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    & img{
+        height: 3.5em;
+        object-fit: cover;
+    }
+
+    & i {
+        font-size: 1.8em;
+        color: var(--gray);
+        cursor: pointer;
+        transition: color 0.3s ease;
+
+        &:hover {
+            color: var(--black);
+        }
+    }
+}
+
+.Laptop_image {
+    position: relative;
+    height: 12em;
+
+    & img {
+        position: absolute;
+        width:  18em;
+        height: 18em;
+        object-fit: cover;
+        left: 3em;
+        top: -4em;
+        z-index: -1;
+        opacity: 0;
+        transition: opacity .5s ease;
+    }
+
+    & img.active {
+        opacity: 1;
+    }
+
+}
+.information_laptop{
+    & .name {
+        font: 2em;
+        font-weight: 500;
+        color: var(--black-2);
+    }
+    & p {
+        font-size: 0.8em;
+        font-weight: 400;
+        color: var(--black);
+    }
+    & .stars i {
+        font-size: 1em;
+        margin: 0 -1px;
+        color: var(--black);
+    }
+}
+
+.color-price {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.color-option {
+    display: flex;
+    align-items: center;
+
+    & .color {
+        font-size: 1.2em;
+        font-weight: 500;
+        color: var(--black);
+        margin-right: 0.3em;
+    }
+    & .circles {
+        display: flex;
+    }
+
+    & .circle {
+        height: 1em;
+        width: 1em;
+        background: var(--color);
+        border-radius: 50%;
+        margin: 0 0.3em;
+        cursor: pointer;
+        transition: all 0.4s ease;
+    }
+
+    & .circle.active {
+        box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--color);
+    }
+}
+
+.price {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    & .price_num {
+        font-size: 1.5em;
+        font-weight: 600;
+        color: var(--gray);
+    }
+
+    & .price_letter {
+        font-size: 0.2em;
+        font-weight: 600;
+        margin-top: -1em;
+        color: var(--gray);
+    }
+}
+
+.add-cart {
+    position: relative;
+    height: 3em;
+    width: 100%;
+    border-radius: 25px;
+    margin-top: 1em;
+    overflow: hidden;
+
+    & .button-layer {
+        position: absolute;
+        height: 100%;
+        width: 300%;
+        background-image: linear-gradient(135deg,#9708cc,#43cbff,#9708cc,#43cbff);
+        transition: all 0.4s ease;
+        border-radius: 25px;
+        left: -100%;
+    }
+
+    &:hover .button-layer {
+        left: 0;
+    }
+    & button {
+        position: relative;
+        height: 100%;
+        width: 100%;
+        background: none;
+        outline: none;
+        border: none;
+        font-size: 1.2em;
+        font-weight: 600;
+        letter-spacing: 1px;
+        color: var(--white);
+    }
+}
+
+
+
+
+
