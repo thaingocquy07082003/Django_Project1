@@ -145,3 +145,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # settings.py
 LOGOUT_REDIRECT_URL = '/Login/'  # or wherever you want to redirect after logout
 
+X_FRAME_OPTIONS = 'ALLOWALL'
+
+XS_SHARING_ALLOWED_METHODS = ['POST','GET','OPTIONS', 'PUT', 'DELETE']
+

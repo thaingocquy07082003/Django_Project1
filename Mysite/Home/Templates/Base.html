@@ -43,6 +43,7 @@
         <link rel="stylesheet"  type="text/css" href="{% static './app/CSS/style.css' %}">
     </head>
     <body>
+      {% if user.username != "admin" %}
           <nav class="navbar navbar-expand-lg bg-body-tertiary">
             <div class="container-fluid">
               <a class="navbar-brand" href="{% url 'home' %}">
@@ -106,6 +107,7 @@
               </div>
             </div>
           </nav>
+        {% endif %}
         <!-- slider -->
         {% block slider-banner %}  {% endblock slider-banner%}
         <!-- Main Content -->

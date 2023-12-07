@@ -31,5 +31,11 @@ urlpatterns = [
     path('Cart/Update_item/',home.UpdateItem,name="Cart_Update_item"),   # url nay chi la de xu ly them bot item trong trang Cart
     path("Rooms/", home.rooms, name="rooms"),
     path("<str:slug>", home.room, name="room"),
+    path("Feedback/", home.get_orderdetail, name="orderdetail"),
+    path("Manage/", home.get_manage, name="manage"),    
+    path("T1/", home.get_t1, name="t1"), 
+    path("T2/", home.get_t2, name="t2"), 
+    path("T3/", home.get_t3, name="t3"), 
+    path("Roomsadmin/", home.rooms_admin, name="roomsadmin"),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

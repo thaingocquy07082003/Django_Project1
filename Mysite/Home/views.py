@@ -6,6 +6,21 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from django.contrib.auth import login,logout,authenticate
 # Create your views here.
+def get_t1(request):
+    return render(request,'T1.html')
+
+def get_t2(request):
+    return render(request,'T2.html')
+
+def get_t3(request):
+    return render(request,'T3.html')
+
+def get_manage(request):
+    return render(request,'Manage.html')
+
+def get_orderdetail(request):
+    return render(request,'OrderDetail.html')
+
 def logoutPage(request):
     logout(request)
     return redirect('Login')
@@ -77,14 +92,20 @@ def get_home(request):
     return render(request,'Home.html',context) 
 def get_Login(request):
     if request.user.is_authenticated:
-        return redirect('home')
+        if request.user.username == 'admin':
+            return redirect('manage')
+        else:
+            return redirect('home')
     if request.method == "POST":
         username = request.POST.get('username')
         password = request.POST.get('password')
         user = authenticate(request,username=username,password=password)
         if user is not None:
             login(request,user)
-            return redirect('home')
+            if user.username == 'admin':
+                return redirect('manage')
+            else:
+                return redirect('home')
         else: messages.info(request,'user or password is incorrect!')
     content = {}
     return render(request,'Login_signup.html',content)
@@ -134,3 +155,8 @@ def room(request,slug):
     room_name=Room.objects.get(slug=slug).name
     messages=Message.objects.filter(room=Room.objects.get(slug=slug))
     return render(request, "room.html",{"room_name":room_name,"slug":slug,'messages':messages})
+
+def rooms_admin(request):
+    rooms=Room.objects.all()
+    return render(request, "roomsadmin.html",{"rooms":rooms})
+

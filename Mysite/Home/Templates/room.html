@@ -16,6 +16,11 @@
     cursor: pointer;
     width:400px;
   }
+  {% if user.username == "admin" %}
+    nav .navbar navbar-expand-lg bg-body-tertiary {
+      display: none;
+    }
+  {% endif %}
 </style>
 {% if user.is_authenticated %}
 

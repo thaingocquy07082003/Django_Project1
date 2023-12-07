@@ -1,0 +1,52 @@
+{% load static %}
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="{% static './app/CSS/T2.css' %}">
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+        <form action="">
+            <div style="width: 250px ;height: 650px;">
+                <div class="option">
+                    <div>
+                        <div>
+                            <a href="{% url 'roomsadmin' %}" target="Frame3" style="font-size: 20px;">
+                                Phản hồi từ khách hàng
+                            </a>
+                        </div>
+                        <div>
+                            <a href="{% url 'orderdetail' %}" target="Frame3">  Danh sách các Order </a>
+                        </div>
+                        {% comment %} <div>
+                            <a href="../Bai12/form2.html" target="Frame3">  Mục 2</a>
+                        </div>
+                       <div>
+                            <a href="../Bai12/form3.html" target="Frame3">  Mục 3</a>
+                       </div>
+                        <div>
+                            <a href="../Bai12/form4.html" target="Frame3">  Mục 4</a>
+                        </div>
+                        
+                        <div>
+                            <a href="../Bai12/form5.html" target="Frame3">  Mục 5</a>
+                        </div> {% endcomment %}
+                        
+                    </div>
+                </div>
+            </div>
+        </form>
+        <script src="" async defer></script>
+    </body>
+</html>

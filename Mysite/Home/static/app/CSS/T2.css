@@ -1,0 +1,60 @@
+.option {
+    background-color: white;
+    
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    width: 300px;
+    text-align: center;
+    display: inline-block;
+  }
+  
+  /* Định dạng phần tử <span> bên trong .option */
+  .option span {
+    font-size: 14px;
+    font-weight: bold;
+    color: rgb(10, 101, 172);
+    display: block;
+    margin-bottom: 10px;
+    text-align: left;
+    margin-bottom: 0px;
+    padding-top: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-bottom: 1px dashed #ccc;
+    height: 30px;
+  }
+  
+  /* Định dạng danh sách liên kết bên trong phần tử <div> */
+  .option div {
+    text-align: center;
+  }
+  
+  /* Định dạng các liên kết */
+  .option a {
+    display: block;
+    height: 30px;
+    margin-bottom: 0px;
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+    transition: color 0.2s ease;
+    border-bottom: 1px dashed #ccc;
+    margin-bottom: 0px;
+    padding-top: 10px;
+    background: 0 0 ;
+    margin-left: 0px;
+    padding-left: 0px;
+    width: 210px;
+  }
+  
+  /* Đổi màu khi di chuột qua các liên kết */
+  .option div div a:hover {
+    background-color: rgb(10, 103, 175);
+    color: white;
+  }
+  
+  .option {
+    margin-left: 10px;
+    margin-top: 30px;
+    width: 210px;
+  }
