@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import get_object_or_404, render,redirect
 from django.http import HttpResponse,JsonResponse,HttpResponseRedirect
 from .models import *
 import json
@@ -18,8 +18,39 @@ def get_t3(request):
 def get_manage(request):
     return render(request,'Manage.html')
 
+# lưu ý chỗ này để xử lí các tác vụ thêm bớt các orderitem chỉ dành riêng cho admin
+def UpdateItemAdmin(request):
+    data = json.loads(request.body)
+    productId = data['productId']
+    action = data['action']
+    # customer = request.user.customer
+    product = Product.objects.get(id = productId)
+    order = get_object_or_404(Order, pk=request.order_id)
+    orderItem , created = OrderItem.objects.get_or_create(order=order,product=product)
+    if action == 'add':
+        orderItem.quantity +=1
+    elif action == 'remove':
+        orderItem.quantity -=1
+    orderItem.save()
+    if orderItem.quantity <= 0:
+        orderItem.delete()
+    return JsonResponse('added',safe=False)
+
+def order_item_detail(request, order_id):
+    order = get_object_or_404(Order, pk=order_id)
+    order_items = order.orderitem_set.all()  # Lấy các OrderItem của đơn hàng này
+    context = {
+        'order': order,
+        'items': order_items,
+    }
+    return render(request, 'OrderItemDetail.html', context)
+
 def get_orderdetail(request):
-    return render(request,'OrderDetail.html')
+    incomplete_orders = Order.objects.filter(complete=False)  # Lấy các đơn hàng chưa hoàn thành từ database
+    context = {
+        'orders': incomplete_orders
+    }
+    return render(request, 'OrderDetail.html', context)
 
 def logoutPage(request):
     logout(request)

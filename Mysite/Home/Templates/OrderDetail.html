@@ -12,12 +12,75 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="">
+        <style>
+            body {
+              font-family: Arial, sans-serif;
+              margin: 20px;
+            }
+        
+            table {
+              width: 100%;
+              border-collapse: collapse;
+              margin-bottom: 20px;
+            }
+        
+            th, td {
+              border: 1px solid #ddd;
+              padding: 8px;
+              text-align: left;
+            }
+        
+            th {
+              background-color: #f2f2f2;
+            }
+        
+            th:first-child, td:first-child {
+              width: 20%;
+            }
+        
+            td a {
+              text-decoration: none;
+              color: blue;
+            }
+        
+            td a:hover {
+              text-decoration: underline;
+            }
+        
+            input[type="checkbox"] {
+              transform: scale(1.5);
+              margin-left: 5px;
+            }
+          </style>
     </head>
     <body>
         <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
-        Orderdtail 
+        <!-- incomplete_order_list.html -->
+        <table>
+            <thead>
+            <tr>
+                <th>Customer</th>
+                <th>Order Item Details</th>
+                <th>Total Value</th>
+                <th>Date Ordered</th>
+                <th>Select</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for order in orders %}
+            <tr>
+                <td>{{ order.customer }}</td>
+                <td><a href="{% url 'order_item_detail' order.id %}">View Details</a></td>
+                <td>{{ order.get_cart_total }}</td>
+                <td>{{ order.date_order }}</td>
+                <td><input type="checkbox" name="selected_orders" value="{{ order.id }}"></td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        
         <script src="" async defer></script>
     </body>
 </html>

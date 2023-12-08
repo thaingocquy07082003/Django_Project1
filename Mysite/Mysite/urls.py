@@ -37,5 +37,7 @@ urlpatterns = [
     path("T2/", home.get_t2, name="t2"), 
     path("T3/", home.get_t3, name="t3"), 
     path("Roomsadmin/", home.rooms_admin, name="roomsadmin"),
+    path('order/<int:order_id>/', home.order_item_detail, name='order_item_detail'),
+    path('order/<int:order_id>/Update_item/', home.UpdateItemAdmin, name='admin_update_item'),   # cái này là đường dẫn cho việc update từng orderitem dành riêng cho admin
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
