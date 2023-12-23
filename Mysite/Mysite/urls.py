@@ -22,7 +22,7 @@ from django.conf import settings
 urlpatterns = [
     path("admin/", admin.site.urls),
     path('',home.get_home,name="home"),
-    path('Register/',home.get_signup,name="Signup"),
+    path('Register/',home.Register,name="Signup"),
     path('Login/',home.get_Login,name="Login"),
     path('Logout/',home.logoutPage,name="logout"),
     path('Cart/',home.Cart,name="Cart"),
@@ -38,6 +38,7 @@ urlpatterns = [
     path("T3/", home.get_t3, name="t3"), 
     path("Roomsadmin/", home.rooms_admin, name="roomsadmin"),
     path('order/<int:order_id>/', home.order_item_detail, name='order_item_detail'),
-    path('order/<int:order_id>/Update_item/', home.UpdateItemAdmin, name='admin_update_item'),   # cái này là đường dẫn cho việc update từng orderitem dành riêng cho admin
+    path('order/<int:order_id>/UpdateAdmin_item/', home.UpdateItemAdmin, name='admin_update_item'),   # cái này là đường dẫn cho việc update từng orderitem dành riêng cho admin
+    path('UpdateAdmin_item/',home.UpdateItemAdmin,name="UpdateAdmin_item"),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
