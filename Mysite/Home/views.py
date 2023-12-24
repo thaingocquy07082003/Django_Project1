@@ -1,5 +1,6 @@
 from django.shortcuts import get_object_or_404, render,redirect
 from django.http import HttpResponse,JsonResponse,HttpResponseRedirect
+import slugify
 from .models import *
 import json
 from django.contrib.auth.forms import UserCreationForm
@@ -7,10 +8,27 @@ from django.contrib import messages
 from .models import ShippingAddress
 from django.contrib.auth import login,logout,authenticate
 # Create your views here.
-
-def Remove_Orders(request):
+def Get_Customer_Order(request):
+    if request.user.is_authenticated:
+        current_customer = request.user.customer
+        # Lấy danh sách các đơn hàng của người dùng hiện tại
+        orders = Order.objects.filter(customer=current_customer,complete=True)
+        cost = 0.0
+        total = 0.0
+        items = []
+        for order in orders:
+            item_list = order.orderitem_set.all()
+            for item in item_list:
+                items.append(item)
+            total+= sum([item.quantity for item in item_list])
+            cost+= sum([item.get_total for item in item_list])
+    else:
+        orders = []
+        cost = 0
+        total = 0
     
-    return get_orderdetail(request)
+    context = {'order': orders, 'cost': cost, 'total': total,'items':items}
+    return render(request, 'CustomerOrder.html', context)
 
 class ShippingAddressForm(forms.ModelForm):
     address = forms.CharField(
@@ -91,19 +109,31 @@ def Register(request):
     if request.method == "POST":
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
-            form.Meta.model.is_active = True
-            form.save()
+            user = form.save(commit=False)  # Lưu User nhưng chưa commit vào database
+            user.is_active = True
+            user.save()
+
+            # Tạo một đối tượng Customer và liên kết với user vừa tạo
+            Customer.objects.create(user=user, name=user.first_name, email="thaingocquydz@gmail.com")
+            latest_room = Room.objects.order_by('-id').first()
+            if latest_room:
+                latest_slug = int(latest_room.slug.split('-')[-1]) + 1
+            else:
+                latest_slug = 1
+
+            room = Room.objects.create(name=user.username, slug=f"{latest_slug}")
+
             # Đăng nhập người dùng mới
-            login(request, form)
+            login(request, user)
+
             # Chuyển hướng người dùng tới trang sau khi đăng ký thành công
             return redirect('home')
-            messages.success(request, 'Account created successfully')
         else:
             # If form is not valid, display form errors
             messages.error(request, 'Please correct the error below.')
 
-    context = {'form':form}
-    return render(request,'Register.html',context)
+    context = {'form': form}
+    return render(request, 'Login_signup.html', context)
 def get_signup(request):
     # if request.method == 'POST':
     #     first_name = request.POST.get('firstname','')

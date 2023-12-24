@@ -1,0 +1,50 @@
+{% extends 'Base.html' %}
+{% load static %}
+{% block Order-content %}
+<div class="row" style="width:100%">
+	<div class="col-lg-12">
+		<div class="box-element">
+
+			<a  class="btn btn-outline-dark" href="{% url 'home' %}">&#x2190; Continue Shopping</a>
+
+			<br>
+			<br>
+			<table class="table">
+				<tr>
+					<th><h5>Items: <strong>{{total}}</strong></h5></th>
+					<th><h5>Cost:<strong> {{cost}}</strong></h5></th>
+					<th>
+						
+					</th>
+				</tr>
+			</table>
+
+		</div>
+
+		<br>
+		<div class="box-element">
+			<div class="cart-row">
+				<div style="flex:2"></div>
+				<div style="flex:2"><strong>Item</strong></div>
+				<div style="flex:1"><strong>Price</strong></div>
+				<div style="flex:1"><strong>Quantity</strong></div>
+				<div style="flex:1"><strong>Total</strong></div>
+                <div style="flex:1"><strong>Date order</strong></div>
+			</div>
+			{% for item in items %}
+				<div class="cart-row">
+					<div style="flex:2"><img class="row-image" src="{{item.product.image.url}}"></div>
+					<div style="flex:2"><p> {{item.product.name}} </p></div>
+					<div style="flex:1"><p>{{item.product.price}}</p></div>
+					<div style="flex:1">
+						<p class="quantity">{{item.quantity}}</p>
+						
+					</div>
+					<div style="flex:1"><p>{{item.get_total}}</p></div>
+                    <div style="flex:1"><p>{{item.date_added}}</p></div>
+				</div>
+		    {% endfor %}
+		</div>
+	</div>
+</div>
+{% endblock Order-content %}

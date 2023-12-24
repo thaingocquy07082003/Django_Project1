@@ -55,11 +55,11 @@ class Order(models.Model):
     @property
     def get_cart_items(self):
         orderitem = self.orderitem_set.all()
-        total = sum([item.quantity for item in orderitem])
+        total = sum([item.quantity for item in orderitem])    # so luong 
         return total
     def get_cart_total(self):
         orderitem = self.orderitem_set.all()
-        total = sum([item.get_total for item in orderitem])
+        total = sum([item.get_total for item in orderitem])   # gia ca 
         return total
 
 class OrderItem(models.Model):
