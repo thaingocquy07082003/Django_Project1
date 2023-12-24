@@ -48,7 +48,9 @@
       <div class="product_item">
         <div class="Logocart">
           <img src="{% static 'app/image/Asuslogo.jpg' %}">
-          <i class="fa-solid fa-bag-shopping"></i>
+          <a href="{% url 'product_detail' %}?product_id={{ product.id }}">
+            <i class="fa-solid fa-bag-shopping"></i>
+          </a>
         </div>
         <div class="Laptop_image">
           <img class="blue active" src="{{product.image.url}}">

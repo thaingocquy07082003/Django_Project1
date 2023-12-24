@@ -43,6 +43,7 @@ urlpatterns = [
     path('CustomerOrder/',home.Get_Customer_Order,name="customerOrder"),
     path('GetToInfor/',home.Get_to_infor,name="gettoinfor"),
     path('ChangeInfor/',home.Change_infor,name="change_infor"),
-    
+    path('DetailProduct/',home.Get_Product_Detail,name="product_detail"),
+     path('DetailProduct/Update_item/',home.UpdateItem,name="Product_Update_item"),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

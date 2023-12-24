@@ -8,6 +8,12 @@ from django.contrib import messages
 from .models import ShippingAddress
 from django.contrib.auth import login,logout,authenticate
 # Create your views here.
+def Get_Product_Detail(request):
+    product_id = request.GET.get('product_id')
+    product = Product.objects.get(id = product_id)
+    context = {'product':product}
+    return render(request, 'Detail.html', context)
+
 def Get_to_infor(request):
     customer = request.user.customer
     name = request.user.first_name + '' + request.user.last_name
