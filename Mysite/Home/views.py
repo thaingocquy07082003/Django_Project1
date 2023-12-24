@@ -8,6 +8,11 @@ from django.contrib import messages
 from .models import ShippingAddress
 from django.contrib.auth import login,logout,authenticate
 # Create your views here.
+def search_view(request):
+    query = request.GET.get('q', '')  
+    results = Product.objects.filter(name__icontains=query)  
+    return render(request, 'search_results.html', {'products': results, 'query': query})
+
 def Get_Product_Detail(request):
     product_id = request.GET.get('product_id')
     product = Product.objects.get(id = product_id)

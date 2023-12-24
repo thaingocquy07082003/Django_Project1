@@ -44,6 +44,7 @@ urlpatterns = [
     path('GetToInfor/',home.Get_to_infor,name="gettoinfor"),
     path('ChangeInfor/',home.Change_infor,name="change_infor"),
     path('DetailProduct/',home.Get_Product_Detail,name="product_detail"),
-     path('DetailProduct/Update_item/',home.UpdateItem,name="Product_Update_item"),
+    path('DetailProduct/Update_item/',home.UpdateItem,name="Product_Update_item"),
+    path('Search/',home.search_view,name="search"),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

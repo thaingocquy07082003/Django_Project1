@@ -1,0 +1,58 @@
+{% extends 'Base.html' %}
+{% load static %}
+{% block search-product %}
+    <h2> Kết quả tìm kiếm của "{{query}} " </h2> <br>
+    <div class="product_container">
+        {% for product in products %}
+          <div class="product_item">
+            <div class="Logocart">
+              <img src="{% static 'app/image/Asuslogo.jpg' %}">
+              <a href="{% url 'product_detail' %}?product_id={{ product.id }}">
+                <i class="fa-solid fa-bag-shopping"></i>
+              </a>
+            </div>
+            <div class="Laptop_image">
+              <img class="blue active" src="{{product.image.url}}">
+              <img class="pink" src="{% static 'app/image/Laptop2.webp' %}">
+              <img class="yellow" src="{% static 'app/image/Laptop3.jpg' %}">
+            </div>
+            <div class="information_laptop">
+              <span calss="name"> {{product.name}} </span>
+              <p> these lap top trainer are very good and have high quality,
+                  let's take it for yourself </p>
+              <div class="stars">
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-regular fa-star"></i>
+              </div>
+    
+              {% comment %} <div class="color-price">
+                <div class="color-option">
+                  <div class="circles">
+                    <span class="circle blue active" data-option="blue" style="--color:#0071c7;">1</span>
+                    <span class="circle pink" data-option="pink" style="--color:#0071c7;">2</span>
+                    <span class="circle yellow" data-option="yellow" style="--color:#0071c7;">3</span>
+                  </div>
+                </div>
+              </div> {% endcomment %}
+              <div class="price">
+                <span class="price_num"> {{product.price}} </span>
+                <span class="price_letter"> Nice dollar only </span>
+              </div>
+              <div class="add-cart button">
+                <div class="button-layer"></div>
+                <button data-product={{product.id}} data-action="add" class="update-cart"> Add to cart </button>
+              </div>
+            </div>
+          </div>
+    
+          <!-- Kiểm tra xem đã đến sản phẩm thứ 4 để xuống dòng -->
+          {% if forloop.counter|divisibleby:4 %}
+          <div class="clear"></div>
+          {% endif %}
+          
+        {% endfor %}
+      </div>
+{% endblock search-product %}

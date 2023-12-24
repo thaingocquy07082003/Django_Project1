@@ -76,8 +76,8 @@
                     <a class="nav-link" href="#"> Liên hệ </a>
                   </li>
                 </ul>
-                <form class="d-flex" role="search">
-                  <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <form class="d-flex" role="search" action="{% url 'search' %}" method="get"> 
+                  <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="q" value="{{ request.GET.q }}" >
                   <button class="btn btn-outline-success" type="submit">Search</button>
                 </form>
               </div>
@@ -119,6 +119,7 @@
         {% block Order-content %}   {%  endblock Order-content %}
         {% block infor-content %}   {%  endblock infor-content %}
         {% block Detail %}     {% endblock Detail %}
+        {% block search-product %}           {% endblock search-product %}
         <!-- Footer -->
         {% comment %} <Footer class="container--fluid bg-success text-center fixed-bottom p-2 mt-5 "> 
             phan footer
