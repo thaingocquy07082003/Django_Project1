@@ -1,0 +1,27 @@
+{% extends 'Base.html' %}
+{% load static %}
+{% block infor-content %}
+<link rel="stylesheet" type="text/css" href="{% static './app/CSS/login_signup.css' %}">
+<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <div style="margin-left:25%;margin-top:20%;width:30%;height:40%;background:url('../image/backgrounddep.jpg');">
+        <form class="login-container" id="login" name="f1" method="POST" action="{% url 'change_infor' %}" style="margin-left:30%;margin-top:0%;" >
+            {% csrf_token %}
+            <div class="input-box">
+                <input type="text" class="input-field" placeholder="Username or Email" name="email" value="{{email}}" >
+                <i class="bx bx-user"></i>
+            </div>
+            <div class="input-box">
+                <input type="text" class="input-field" placeholder="Username or Email" name="name" readonly value="{{name}}" >
+                <i class="bx bx-user"></i>
+            </div>
+            <div class="input-box">
+                <input type="password" class="input-field" placeholder="Password" name="password"> 
+                <i class="bx bx-lock-alt"></i>
+            </div>
+            <div class="input-box">
+                <input type="submit" class="submit" value="Sign In">
+            </div>
+            </div>
+        </form>
+    </div>    
+{% endblock infor-content %}

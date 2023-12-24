@@ -4,7 +4,7 @@ for(i=0;i<updateBtns.length;i++) {
     updateBtns[i].addEventListener('click',function(){
         var productId = this.dataset.product
         var action = this.dataset.action
-        var orderId = this.dataset.order
+        var orderId = this.dataset.orderId
         console.log('productId',productId,'action',action,'orderId',orderId)
         console.log('user: ',user)
         if (user === "AnonymousUser") {
@@ -18,7 +18,7 @@ for(i=0;i<updateBtns.length;i++) {
 
 function updateUserOrder(productId,action,orderId) {
     console.log('user logged in , success add')
-    var url = 'UpdateAdmin_item/'
+    var url = 'UpdateAdmin_item/'+orderId
     fetch(url, {
         method: 'POST',
         headers: {
@@ -28,7 +28,7 @@ function updateUserOrder(productId,action,orderId) {
         body: JSON.stringify({
             'productId': productId,
             'action': action,
-            'orderId': orderId
+            'order_id': orderId
         })
     })
      .then((response) => {

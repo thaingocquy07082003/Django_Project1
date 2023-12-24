@@ -8,6 +8,25 @@ from django.contrib import messages
 from .models import ShippingAddress
 from django.contrib.auth import login,logout,authenticate
 # Create your views here.
+def Get_to_infor(request):
+    customer = request.user.customer
+    name = request.user.first_name + '' + request.user.last_name
+    email = customer.email 
+    context = {'name':name,'email':email}
+    return render(request, 'Information.html', context)
+
+def Change_infor(request):
+    if request.user.is_authenticated:   
+        name = request.POST.get('name')
+        password = request.POST.get('password')
+        email = request.POST.get('email')
+        Customer.objects.filter(user=request.user).update(email=email)
+        user_to_update = User.objects.get(username=request.user.username)
+        user_to_update.set_password(password)
+        user_to_update.save()
+    context = {'name':name,'password':password,'email':email}
+    return get_home(request)
+
 def Get_Customer_Order(request):
     if request.user.is_authenticated:
         current_customer = request.user.customer

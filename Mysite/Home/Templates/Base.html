@@ -92,7 +92,7 @@
                   </a>
                   <ul class="dropdown-menu">
                     <li><a class="dropdown-item" href="{% url 'customerOrder' %}">Đơn hàng</a></li>
-                    <li><a class="dropdown-item" href="#">Trang cá nhân</a></li>
+                    <li><a class="dropdown-item" href="{% url 'gettoinfor' %}">Trang cá nhân</a></li>
                     <li><a class="dropdown-item" href="{% url 'logout' %}">Thoát</a></li>
                   </ul>
                 </li>
@@ -117,6 +117,7 @@
         {% block rooms-content %}   {%  endblock rooms-content %}
         {% block room-content %}   {%  endblock room-content %}
         {% block Order-content %}   {%  endblock Order-content %}
+        {% block infor-content %}   {%  endblock infor-content %}
         <!-- Footer -->
         {% comment %} <Footer class="container--fluid bg-success text-center fixed-bottom p-2 mt-5 "> 
             phan footer
