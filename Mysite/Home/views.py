@@ -8,6 +8,9 @@ from django.contrib import messages
 from .models import ShippingAddress
 from django.contrib.auth import login,logout,authenticate
 # Create your views here.
+def get_chat(request):
+    return render(request, 'ChatRoom.html')
+
 def search_view(request):
     query = request.GET.get('q', '')  
     results = Product.objects.filter(name__icontains=query)  

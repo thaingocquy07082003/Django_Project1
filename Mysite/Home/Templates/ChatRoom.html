@@ -1,0 +1,142 @@
+{% extends 'Base.html' %}
+{% load static %}
+{% comment %} {% block title %}Home{% endblock %} {% endcomment %}
+
+{% block room-content %}
+
+{% if user.is_authenticated %}
+
+    <link rel="stylesheet"  type="text/css" href="{% static './app/CSS/style-chat.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css" integrity="sha512-q3eWabyZPc1XTCmF+8/LuE1ozpg5xxn7iO89yfSOd5/oKvyqLngoNGsx8jq92Y8eXJ/IRxQbEC+FGSYxtk2oiw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <div class="wrapper" style="width:1000px;">
+       <form>
+            <section class="chat-area">
+            <header>
+                <a href="#" class="back-icon">
+                <i class="fas fa-arrow-left"></i>
+                </a>
+                <img src="" alt="">
+                <div class="details">
+                <span>Họ và tên </span>
+                <div></div>
+                </div>
+            </header>
+
+            {% if messages %}
+            <div class="chatbox"  style="padding: 4px 2px;max-height: 500px;  /* Adjust the max-height as needed */
+            overflow-y: scroll;
+            "">
+                
+                {% for message in messages %}
+                    <div class="{% if message.user == request.user %}chat outgoing{% else %}chat incoming{% endif %}" >
+                    <div class="details"> 
+                        <p> {{ message.content }}  </p>
+                    </div>
+                    </div>
+                    {% endfor %}
+                
+                
+            </div>
+            {% else %}
+            <div class="jumbotron" id="chatbox" style="padding: 4px 2px;"></div>
+            <b>No Messages in this Room.</b>
+                {% endif %}
+            
+            </section>
+           
+            <div class="form-group" style="width: 100%;">
+                <input class="form-control" placeholder="Enter text here" id="my_input" type="text" required></br>
+            </div>
+            <br/>
+            <input class="btn btn-primary btn-lg btn-block" id="submit_button" type="button" value="Send" style="margin-left:45%;">
+        </form>
+    </div>
+{{slug|json_script:"room_slug"}}
+<script>
+
+const chatbox = document.querySelector("#chatbox");
+
+  // Function to scroll to the bottom of the chatbox
+  function scrollToBottom() {
+    chatbox.scrollTop = chatbox.scrollHeight;
+  }
+
+  // Scroll to bottom when the page is loaded
+  scrollToBottom();
+
+ 
+    const roomName= JSON.parse(document.getElementById('room_slug').textContent);
+    const chatSocket = new WebSocket("ws://" + window.location.host + "/ws/"+ roomName +"/");
+    // const chatSocket = new WebSocket("ws://127.0.0.1:8000/ws/"+ roomName +"/");
+    // alert(chatSocket);
+    chatSocket.onopen = function (e) {
+      console.log("The connection was setup successfully !");
+    };
+    chatSocket.onclose = function (e) {
+      console.log("Something unexpected happened !");
+    };
+
+    document.querySelector("#my_input").focus();
+    document.querySelector("#my_input").onkeyup = function (e) {
+      if (e.keyCode == 13) {
+        e.preventDefault();
+        document.querySelector("#submit_button").click();
+      }
+    };
+    document.querySelector("#submit_button").onclick = function (e) {
+      var messageInput = document.querySelector(
+        "#my_input"
+      ).value;
+
+      if(messageInput.length == 0)
+        {
+            alert("Add some Input First Or Press Send Button!")
+        }
+        else
+        {
+          chatSocket.send(JSON.stringify({ message: messageInput, username : "{{request.user.username}}",room_name:"{{room_name}}"}));
+          
+         
+        }
+      
+    };
+
+    chatSocket.onmessage = function (e) {
+      const data = JSON.parse(e.data);
+      var div = document.createElement("div");
+      {% comment %} div.innerHTML = "<b>" + data.username + "</b> : " + data.message; {% endcomment %}
+      div.innerHTML =  ' <br> <p> ' + data.message + "</p>";
+      // Add class based on user authentication
+      if (data.username === "{{ request.user.username }}") {
+        div.classList.add("chat outgoing");
+      } else {
+        div.classList.add("chat incoming");
+      }
+
+      document.querySelector("#my_input").value = "";
+      document.querySelector("#chatbox").appendChild(div);
+      scrollToBottom();
+    };
+  </script>
+
+
+
+{% else %}
+<div class="container">
+    <div class="alert alert-info d-flex justify-content-between" role="alert">
+        <h5>You are not logged in</h5>
+        <a href="/accounts/logout/">
+          <button type="button" class="btn btn-light"><a href="{% url 'login' %}">Log In</a></button>
+        </a>
+      </div>
+</div>  
+{% endif %}
+
+<br/>
+
+    
+
+
+
+
+{% endblock %}
