@@ -58,22 +58,12 @@
                     <a class="nav-link active" aria-current="page" href="{% url 'home' %}"> Trang chủ </a>
                   </li>
               
-                  <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      Sản Phẩm
-                    </a>
-                    <ul class="dropdown-menu">
-                      <li><a class="dropdown-item" href="#">Laptop</a></li>
-                      <li><a class="dropdown-item" href="#">Phụ kiện đi kèm</a></li>
-                      <li><hr class="dropdown-divider"></li>
-                      <li><a class="dropdown-item" href="#">Something else here</a></li>
-                    </ul>
+                
+                  <li class="nav-item">
+                    <a class="nav-link" href="{% url 'introduce' %}"> Giới thiệu </a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="#"> Giới thiệu </a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="#"> Liên hệ </a>
+                    <a class="nav-link" href="{% url 'contact' %}"> Liên hệ </a>
                   </li>
                 </ul>
                 <form class="d-flex" role="search" action="{% url 'search' %}" method="get"> 
@@ -92,7 +82,7 @@
                   </a>
                   <ul class="dropdown-menu">
                     <li><a class="dropdown-item" href="{% url 'customerOrder' %}">Đơn hàng</a></li>
-                    <li><a class="dropdown-item" href="{% url 'gettoinfor' %}">Trang cá nhân</a></li>
+                    <li><a class="dropdown-item" href="{% url 'gettoinfor' %}">Đổi mật khẩu</a></li>
                     <li><a class="dropdown-item" href="{% url 'logout' %}">Thoát</a></li>
                   </ul>
                 </li>
@@ -120,7 +110,8 @@
         {% block infor-content %}   {%  endblock infor-content %}
         {% block Detail %}     {% endblock Detail %}
         {% block search-product %}           {% endblock search-product %}
-        <!-- Footer -->
+        {% block content %}      {% endblock content %}
+        <!-- Footer --> 
         {% comment %} <Footer class="container--fluid bg-success text-center fixed-bottom p-2 mt-5 "> 
             phan footer
         </Footer> {% endcomment %}

@@ -97,7 +97,7 @@ class Message(models.Model):
     content = models.TextField()
     room = models.ForeignKey(Room, on_delete=models.CASCADE)
     created_on = models.DateTimeField(auto_now_add=True)
-
+    image = models.ImageField(null=True,blank=True)
 
     def __str__(self):
         return "Message is :- "+ self.content

@@ -47,5 +47,8 @@ urlpatterns = [
     path('DetailProduct/Update_item/',home.UpdateItem,name="Product_Update_item"),
     path('Search/',home.search_view,name="search"),
     path('Chat/',home.get_chat,name="chat"),
+    path('Contact/', home.contact_view, name='contact'),
+    path('Introduce/', home.introduce, name='introduce'),
+    path('Search_order/', home.Search_Order, name='search_order'),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

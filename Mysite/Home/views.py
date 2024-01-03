@@ -8,6 +8,22 @@ from django.contrib import messages
 from .models import ShippingAddress
 from django.contrib.auth import login,logout,authenticate
 # Create your views here.
+def Search_Order(request):
+    username=request.POST.get('username')
+    user = User.objects.get(username=username)
+
+    incomplete_orders = Order.objects.filter(complete=True,customer=user.customer)  # Lấy các đơn hàng đã được khách hàng hoàn thành từ database
+    context = {
+        'orders': incomplete_orders
+    }
+    return render(request, 'OrderDetail.html', context)
+
+def introduce(request):
+    return render(request, 'introduce.html')
+
+def contact_view(request):
+    return render(request, 'contact.html')
+
 def get_chat(request):
     return render(request, 'ChatRoom.html')
 
@@ -71,7 +87,7 @@ class ShippingAddressForm(forms.ModelForm):
         widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'city'}),
     )
     state = forms.CharField(
-        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'state'}),
+        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Country'}),
     )
     moblie = forms.CharField(
         widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'moblie'}),
@@ -114,9 +130,11 @@ def UpdateItemAdmin(request, order_id):
 def order_item_detail(request, order_id):
     order = get_object_or_404(Order, pk=order_id)
     order_items = order.orderitem_set.all()  # Lấy các OrderItem của đơn hàng này
+    Ship = ShippingAddress.objects.get(order=order)
     context = {
         'order': order,
         'items': order_items,
+        'Ship': Ship,
     }
     return render(request, 'OrderItemDetail.html', context)
 
@@ -168,31 +186,6 @@ def Register(request):
     context = {'form': form}
     return render(request, 'Login_signup.html', context)
 def get_signup(request):
-    # if request.method == 'POST':
-    #     first_name = request.POST.get('firstname','')
-    #     last_name = request.POST.get('lastname','')
-    #     username = request.POST.get('username','')
-    #     password = request.POST.get('password','')
-    #     initial_data = {'username': username,'first_name': first_name ,'last_name': last_name, 'password':password }
-    #     form = UserCreationForm(initial=initial_data)
-    #     if form.is_valid():
-    #         form.save()
-    # else:
-    #     form = UserCreationForm()
-    # context = {'form':form}
-
-
-    # if request.method == 'POST':
-    #     form = UserCreationForm(request.POST)  # Dùng dữ liệu POST trực tiếp
-    #     if form.is_valid():
-    #        user = form.save(commit=False)  # Tạo đối tượng người dùng nhưng chưa lưu vào CSDL
-    #        user.first_name = request.POST['firstname']  # Thêm first_name cho user
-    #        user.last_name = request.POST['lastname']  # Thêm last_name cho user
-    #        user.save()  # Lưu người dùng vào CSDL
-    #        # Đăng nhập người dùng hoặc gửi thông báo thành công tại đây nếu cần
-    # else:
-    #     form = UserCreationForm()
-    # context = {'form':form}
     form = CustomUserCreationForm()
     if request.method == "POST":
         form = CustomUserCreationForm(request.POST)
@@ -251,6 +244,7 @@ def Checkout(request):
         items =[]
         order = {'get_cart_items':0,'get_cart_total':0}
     formShip = ShippingAddressForm(request.POST or None)
+    
     if request.method == 'POST' and formShip.is_valid():
         shipping_address = formShip.save(commit=False)
         # Đặt customer từ user hiện tại
@@ -263,7 +257,11 @@ def Checkout(request):
             pass
         else:
             shipping_address.order = order
-            shipping_address.save()
+            AllShipping = ShippingAddress.objects.filter(order=order).first()
+            if AllShipping:
+                ShippingAddress.objects.filter().update(order=order).update(address=shipping_address.address,city=shipping_address.city,state=shipping_address.state,moblie=shipping_address.moblie)
+            else:
+                shipping_address.save()
             Order.objects.filter(customer=customer, complete=False).update(complete=True)
             return redirect('home')  # redirect đến trang mong muốn sau khi lưu
     context = {'items':items,'order':order,'formShip':formShip}

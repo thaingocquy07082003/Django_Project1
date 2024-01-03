@@ -39,29 +39,28 @@
               <div class="chatbox" id="chatbox"  style="padding: 4px 2px;max-height: 500px;  /* Adjust the max-height as needed */
               overflow-y: scroll;
               "">
-                  
                   {% for message in messages %}
                       <div class="{% if message.user == request.user %}chat outgoing{% else %}chat incoming{% endif %}" style="
                       {% if message.user == request.user %}{% else %} {% endif %}
                       ">
                       <div class="details"> 
-                          <p> {{ message.content }}  </p>
+                          <p> 
+                            {{ message.content }}  
+                          </p>
                       </div>
                       </div>
-                      {% endfor %}
-                  
-                  
+                  {% endfor %}
               </div>
               {% else %}
               <div class="jumbotron" id="chatbox" style="padding: 4px 2px;"></div>
               <b>No Messages in this Room.</b>
                   {% endif %}
-              
               </section>
-            
+  
               <div class="form-group" style="width: 100%;">
                   <input class="form-control" placeholder="Enter text here" id="my_input" type="text" required></br>
               </div>
+              
               <br/>
               <input class="btn btn-primary btn-lg btn-block" id="submit_button" type="button" value="Send" style="margin-left:45%;">
           </form>
@@ -69,8 +68,7 @@
     <div>
 {{slug|json_script:"room_slug"}}
 <script>
-
-const chatbox = document.querySelector("#chatbox");
+  const chatbox = document.querySelector("#chatbox");
 
 
     const roomName= JSON.parse(document.getElementById('room_slug').textContent);
@@ -125,7 +123,7 @@ const chatbox = document.querySelector("#chatbox");
       document.querySelector("#chatbox").appendChild(div);
       
     };
-  </script>
+</script>
 
 
 
@@ -143,8 +141,5 @@ const chatbox = document.querySelector("#chatbox");
 <br/>
 
     
-
-
-
 
 {% endblock %}
