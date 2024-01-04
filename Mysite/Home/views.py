@@ -149,13 +149,6 @@ def logoutPage(request):
     logout(request)
     return redirect('Login')
 def Register(request):
-    # form = CustomUserCreationForm()
-    # if request.method == "POST":
-    #     form = CustomUserCreationForm(request.POST)
-    #     if form.is_valid():
-    #         form.save()
-            
-    # context ={'form':form}
     form = CustomUserCreationForm()
     if request.method == "POST":
         form = CustomUserCreationForm(request.POST)
@@ -171,7 +164,6 @@ def Register(request):
                 latest_slug = int(latest_room.slug.split('-')[-1]) + 1
             else:
                 latest_slug = 1
-
             room = Room.objects.create(name=user.username, slug=f"{latest_slug}")
 
             # Đăng nhập người dùng mới

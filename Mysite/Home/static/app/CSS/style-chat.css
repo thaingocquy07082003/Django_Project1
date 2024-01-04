@@ -325,6 +325,7 @@ body{
   border-radius: 18px 18px 0 18px;
   width:200px;
   margin-left:40%;
+  
 }
 .chat-box .incoming{
   display: flex;
@@ -442,4 +443,22 @@ body{
   .chat-area form button{
     width: 45px;
   }
+}
+
+.image-incomming{
+  float: left;
+  width:200px;
+  height:70px;
+  border-radius:0px;
+  margin-left:50%;
+  display:block;
+}
+
+.image-outgoing {
+  float: right;
+  width:200px;
+  height:70px;
+  border-radius:0px;
+  margin-left:50%;
+  display:block;
 }

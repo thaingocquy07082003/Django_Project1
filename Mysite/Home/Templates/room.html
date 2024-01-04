@@ -40,15 +40,36 @@
               overflow-y: scroll;
               "">
                   {% for message in messages %}
-                      <div class="{% if message.user == request.user %}chat outgoing{% else %}chat incoming{% endif %}" style="
-                      {% if message.user == request.user %}{% else %} {% endif %}
-                      ">
-                      <div class="details"> 
-                          <p> 
-                            {{ message.content }}  
-                          </p>
-                      </div>
-                      </div>
+                      {% if message.image %}
+                        {% if message.user == request.user %}
+                          <div style="width:100%;display:inline-block;">
+                            <img  src="{{message.image.url}}" style="float: right;width:200px;height:70px;border-radius:0px;margin-left:45%;display:block;" >  <br>
+                          </div>
+                          {% else %}
+                          <div style="width:100%;display:inline-block;">
+                            <img  src="{{message.image.url}}" style="float: left;width:200px;height:70px;border-radius:0px;margin-left:5px;display:block;" >  <br>
+                          </div>
+                        {% endif %}
+                        <div class="{% if message.user == request.user %}chat outgoing{% else %}chat incoming{% endif %}" style="
+                        {% if message.user == request.user %}{% else %} {% endif %}
+                        ">
+                        <div class="details"> 
+                            <p> 
+                              {{ message.content }}  
+                            </p>
+                        </div>
+                        </div>
+                      {% else %}
+                        <div class="{% if message.user == request.user %}chat outgoing{% else %}chat incoming{% endif %}" style="
+                        {% if message.user == request.user %}{% else %} {% endif %}
+                        ">
+                        <div class="details"> 
+                            <p> 
+                              {{ message.content }}  
+                            </p>
+                        </div>
+                        </div>
+                      {% endif %}
                   {% endfor %}
               </div>
               {% else %}
@@ -60,7 +81,7 @@
               <div class="form-group" style="width: 100%;">
                   <input class="form-control" placeholder="Enter text here" id="my_input" type="text" required></br>
               </div>
-              
+              <input type="file" name="image" accept="image/*">
               <br/>
               <input class="btn btn-primary btn-lg btn-block" id="submit_button" type="button" value="Send" style="margin-left:45%;">
           </form>
@@ -100,28 +121,82 @@
         }
         else
         {
-          chatSocket.send(JSON.stringify({ message: messageInput, username : "{{request.user.username}}",room_name:"{{room_name}}"}));
+          {% comment %} chatSocket.send(JSON.stringify({ message: messageInput, username : "{{request.user.username}}",room_name:"{{room_name}}"})); {% endcomment %}
+          var fileInput = document.querySelector("input[name='image']").files[0];
+
+          if (fileInput) {
+              var reader = new FileReader();
+              reader.readAsDataURL(fileInput);
+
+              reader.onload = function () {
+                  var imageData = reader.result; // Chuỗi base64 của hình ảnh
+
+                  // Gửi tin nhắn và hình ảnh dưới dạng chuỗi base64 qua WebSocket
+                  chatSocket.send(JSON.stringify({
+                      message: messageInput,
+                      username: "{{ request.user.username }}",
+                      room_name: "{{ room_name }}",
+                      image: imageData
+                  }));
+              };
+          } else 
+          {
+              // Nếu không có hình ảnh, chỉ gửi tin nhắn thông thường
+              chatSocket.send(JSON.stringify({
+                  message: messageInput,
+                  username: "{{ request.user.username }}",
+                  room_name: "{{ room_name }}"
+              }));
+          }
           
-         
         }
       
     };
 
     chatSocket.onmessage = function (e) {
       const data = JSON.parse(e.data);
+    
+      // Tạo div cho tin nhắn và div2 cho hình ảnh
       var div = document.createElement("div");
-      {% comment %} div.innerHTML = "<b>" + data.username + "</b> : " + data.message; {% endcomment %}
-      div.innerHTML = '<div class="details"> ' + ' <br> <p> ' + data.message + "</p>  </div>";
-      // Add class based on user authentication
-      if (data.username === "{{ request.user.username }}") {
-        div.classList.add("chat","outgoing");
-      } else {
-        div.classList.add("chat","incoming");
+      var div2 = document.createElement("div");
+    
+      // Kiểm tra xem có dữ liệu hình ảnh không và gắn vào div2
+      if (data.image_data) {
+        var img = document.createElement("img");
+        img.src = data.image_data; // Sử dụng đường dẫn ảnh từ dữ liệu nhận được qua WebSocket
+        img.style.width = "200px";
+        img.style.height = "70px";
+        img.style.borderRadius = "0px";
+        img.style.display = "block";
+    
+        if (data.username === "{{ request.user.username }}") {
+          img.style.float = "right";
+          img.style.marginLeft = "45%";
+        } else {
+          img.style.float = "left";
+          img.style.marginLeft = "5px";
+        }
+    
+        div2.style.width = "100%";
+        div2.style.display = "inline-block";
+        div2.appendChild(img);
       }
-
+    
+      // Tạo nội dung cho tin nhắn
+      div.innerHTML = '<div class="details"> ' + ' <br> <p> ' + data.message + "</p>  </div>";
+      if (data.username === "{{ request.user.username }}") {
+        div.classList.add("chat", "outgoing");
+      } else {
+        div.classList.add("chat", "incoming");
+      }
+    
+      // Đặt tin nhắn và ảnh vào chatbox
       document.querySelector("#my_input").value = "";
+      if (data.image_data) {
+        document.querySelector("#chatbox").appendChild(div2);
+      }
       document.querySelector("#chatbox").appendChild(div);
-      
+      document.querySelector("input[name='image']").value = "";
     };
 </script>
 
