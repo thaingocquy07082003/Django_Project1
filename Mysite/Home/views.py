@@ -147,7 +147,7 @@ def get_orderdetail(request):
 
 def logoutPage(request):
     logout(request)
-    return redirect('Login')
+    return redirect('Signup')
 def Register(request):
     form = CustomUserCreationForm()
     if request.method == "POST":

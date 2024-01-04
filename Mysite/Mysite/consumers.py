@@ -54,9 +54,9 @@ class ChatConsumer(AsyncWebsocketConsumer):
         user = User.objects.get(username=username)
         room = Room.objects.get(name=room_name)
         new_message = Message.objects.create(user=user, room=room, content=message)
-        
         # Xử lý và lưu ảnh nếu có
-        if image_data:
+        if image_data:  
+             # "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/4QBYRXhpZgAATU0AKgAAAAgAAkAAAAMAAAABAAEAAAIBAAEAAAABAAQA...
             format, imgstr = image_data.split(';base64,')
             ext = format.split('/')[-1]
             image_data = ContentFile(base64.b64decode(imgstr), name=f"{room_name}-{username}-image.{ext}")
