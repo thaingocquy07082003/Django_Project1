@@ -43,9 +43,20 @@ static/
 - Database: MySQL (Xampp).
 
 ## II. Demo Main features of the program 
+
 1. Order, view cart, view detailed product information ( Customer ).
 
+![](./doc/1.png)
+![](./doc/2.png)
+![](./doc/3.png)
+
 3. Sign in and register an account with security supported by Django.
+
+![](./doc/4.png)
+![](./doc/5.png)
+
 4. Chat with Admin/Manager.
+
+![](./doc/6.png)
    
 
